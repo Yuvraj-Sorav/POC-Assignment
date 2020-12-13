@@ -52,16 +52,16 @@ class DashboardViewController : UIViewController {
     
     private func setUpInitials() {
         if Reachability.isConnectedToNetwork() {
-            DashboardViewModel.getDashboardData { (dashBoardViewMod, errorMsg) in
+            DashboardViewModel.getDashboardData { [weak self] (dashBoardViewMod, errorMsg) in
                 if errorMsg == nil {
-                    self.dashboardViewModel = dashBoardViewMod
+                    self?.dashboardViewModel = dashBoardViewMod
                     DispatchQueue.main.async {
-                        self.title = self.dashboardViewModel?.titleStr
-                        self.refreshControl.endRefreshing()
-                        self.tableview.reloadData()
+                        self?.title = self?.dashboardViewModel?.titleStr
+                        self?.refreshControl.endRefreshing()
+                        self?.tableview.reloadData()
                     }
                 }else {
-                    self.view.displayToast(errorMsg ?? StaticErrorMessage.somethingWentWrongMessage)
+                    self?.view.displayToast(errorMsg ?? StaticErrorMessage.somethingWentWrongMessage)
                 }
             }
         }else {
